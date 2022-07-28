@@ -1,3 +1,5 @@
+// Content
+
 let dogData = [
   {
     image: "./images/dog-1.jpg",
@@ -7,7 +9,7 @@ let dogData = [
   {
     image: "./images/dog-2.jpg",
     title: "Leonbergi",
-    text: "Már Sissi királynő is odavolt ezekért az oroszlánszerű kutyákért. A leonbergi nem csak a mérete és harmonikus testfelépítése lenyűgöző, hanem a gyermekszeretete és magabiztos nyugalma miatt is..",
+    text: "Már Sissi királynő is odavolt ezekért az oroszlánszerű kutyákért. A leonbergi nem csak a mérete és harmonikus testfelépítése lenyűgöző, hanem a gyermekszeretete és magabiztos nyugalma miatt is.",
   },
   {
     image: "./images/dog-3.jpg",
@@ -21,17 +23,18 @@ let dogData = [
   },
 ];
 
-let currentPhoto = 0;
+// Function that add content to the main section, and defining the active thumbnail
 
-function loadPhoto(numberPhoto) {
+let currentPhoto = 0;
+let loadPhoto = (numberPhoto) => {
   $("#dog-img").attr("src", dogData[numberPhoto].image);
   $("#dog-title").text(dogData[numberPhoto].title);
   $("#dog-text").text(dogData[numberPhoto].text);
   $(".thumb img").removeClass("thumb-active");
   $(".thumb img[data-index=" + numberPhoto + "]").addClass("thumb-active");
-}
+};
 
-loadPhoto(currentPhoto);
+// Changing the main content, with side arrows
 
 $("#right-arrow").click(() => {
   if (currentPhoto < dogData.length - 1) {
@@ -39,7 +42,6 @@ $("#right-arrow").click(() => {
   } else {
     currentPhoto = 0;
   }
-  console.log(currentPhoto);
   loadPhoto(currentPhoto);
 });
 
@@ -52,21 +54,24 @@ $("#left-arrow").click(() => {
   loadPhoto(currentPhoto);
 });
 
+// Add a thumbnail for each different content
+
 dogData.forEach((object, number) => {
   $("aside").append(
-    `
-    <div class="thumb">
-      <div class="dog-name">
-        ${object.title}
-      </div>
+    `<div class="thumb">
+    <div class="dog-name">${object.title}</div>
     <img src=${object.image} data-index="${number}">
     </div>`
   );
 });
 
+// Changing the main contentm by clicking on thumbnails
+
 $(".thumb").click((event) => {
-  let indexClicked = $(event.target).attr("data-index");
-  let numberIndex = parseInt(indexClicked);
-  currentPhoto = indexClicked;
+  currentPhoto = $(event.target).attr("data-index");
   loadPhoto(currentPhoto);
 });
+
+// Load the first content
+
+loadPhoto(currentPhoto);
